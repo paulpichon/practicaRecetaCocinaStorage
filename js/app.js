@@ -52,9 +52,42 @@ function iniciarApp() {
 
         fetch( url )
             .then( respuesta => respuesta.json() )
-                .then( resultado => console.log(resultado) )
+                .then( resultado => mostrarRecetas(resultado.meals) )
 
 
+    }
+
+    //funcion para mostrar los resultados por categoria
+    function mostrarRecetas( recetas = [] ) {
+        
+        //iterar en cada uno de los resultados
+        recetas.forEach(receta => {
+            //destructuring
+            const { idMeal, strMeal, strMealThumb } = receta;
+            //construir el html
+            //contenedor
+            const recetaContenedor = document.createElement('DIV');
+            recetaContenedor.classList.add('col-md-4');
+
+            //card
+            const recetaCard = document.createElement('DIV');
+            recetaCard.classList.add('card', 'mb-4');
+
+            //imagen
+            const recetaImagen = document.createElement('IMG');
+            //estilos
+            recetaImagen.classList.add('card-img-top');
+            //Alt de la imagen
+            recetaImagen.alt = `Imagen de la receta ${ strMeal }`;
+            //source de la imagen
+            recetaImagen.src = strMealThumb;
+
+            //cuerpo del body
+            const recetaCardBody = document.createElement('DIV');
+            recetaCardBody.classList.add('card-body');
+
+            console.log( recetaImagen );
+        });
     }
 
 }   
