@@ -5,9 +5,6 @@ function iniciarApp() {
     //añadir un listener a selectCategorias
     selectCategorias.addEventListener('change', seleccionarCategoria);
 
-    //variable que representa donde se mostraran las recetas
-    const resultado = document.querySelector('#resultado');
-
     //llamar funcion
     cargarCategorias();
 
@@ -50,13 +47,25 @@ function iniciarApp() {
 
     }
 
-    //funcion para mostrar recetas
-    function mostrarRecetas( recetas = []) {
-        //iterar el arreglo de recetas
+    //funcion para renderizar las recetas al seleccionar una categoria
+    function mostrarRecetas( recetas = [] ) {
+
+        //limpiar el HTML anterior
+        limpiarHTML( resultado );
+
+        //heading para mostrar resultados o si no hay resultados
+        const heading = document.createElement('h2');
+        heading.classList.add('text-center', 'text-black', 'my-5');
+        //operador ternario
+        //en caso de que si hay resultados se muestra RESULTADOS de lo contrario NO HAY RESULTADOS
+        heading.textContent = recetas.length ? 'Resultados' : 'No hay resultados';
+        //renderizar
+        resultado.appendChild( heading );
+
+        //iterar sobre el arreglo de recetas
         recetas.forEach( receta => {
             //destructuring
             const { idMeal, strMeal, strMealThumb } = receta;
-
             //html
             //contenedor
             const recetaContenedor = document.createElement('DIV');
@@ -69,10 +78,9 @@ function iniciarApp() {
             //imagen
             const recetaImagen = document.createElement('IMG');
             recetaImagen.classList.add('card-img-top');
-            recetaImagen.alt = `La imagen de la receta ${strMeal}`;
+            recetaImagen.alt = `Imagen de la receta ${strMeal}`;
             recetaImagen.src = strMealThumb;
 
-            /***************CARD BODY****************/
             //card body
             const recetaCardBody = document.createElement('DIV');
             recetaCardBody.classList.add('card-body');
@@ -86,23 +94,37 @@ function iniciarApp() {
             const recetaButton = document.createElement('BUTTON');
             recetaButton.classList.add('btn', 'btn-danger', 'w-100');
             recetaButton.textContent = 'Ver Receta';
-
-            //inyectar en el codigo HTML
+            
+            //recetaCardBody
+            //heading
             recetaCardBody.appendChild( recetaHeading );
+            //button
             recetaCardBody.appendChild( recetaButton );
 
-            //receta card
+            //recetaCard
             recetaCard.appendChild( recetaImagen );
             recetaCard.appendChild( recetaCardBody );
 
-            //agregar al contenedor principal
+            //contenedor
             recetaContenedor.appendChild( recetaCard );
 
-            //renderizar
+            //renderizar en el html
             resultado.appendChild( recetaContenedor );
+
+
+
 
         });
     }
+
+    //funcion para limpiar el HTML anterior
+    //se pasa como paramtro el selector de donde queremos que limpie
+    function limpiarHTML( selector ) {
+        while( selector.firstChild ) {
+            selector.removeChild( selector.firstChild );
+        }
+    }
+    
 
 }
 
