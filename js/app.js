@@ -95,6 +95,18 @@ function iniciarApp() {
             recetaButton.classList.add('btn', 'btn-danger', 'w-100');
             recetaButton.textContent = 'Ver Receta';
             
+            //para llamar al modal
+            //recetaButton.dataset.bsTarget = "#modal";
+            //recetaButton.dataset.bsToggle = "modal";
+
+            //agregar un onclick
+            //callback
+            recetaButton.onclick = function() {
+                //funcion con argumento del idMeal
+                seleccionarReceta( idMeal );
+            }            
+
+            
             //recetaCardBody
             //heading
             recetaCardBody.appendChild( recetaHeading );
@@ -111,10 +123,12 @@ function iniciarApp() {
             //renderizar en el html
             resultado.appendChild( recetaContenedor );
 
-
-
-
         });
+    }
+
+    //funcion para seleccionar ID de la receta
+    function seleccionarReceta( id ) {
+        console.log( id );
     }
 
     //funcion para limpiar el HTML anterior
