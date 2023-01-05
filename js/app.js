@@ -161,8 +161,34 @@ function iniciarApp() {
             <img class="img-fluid" src="${ strMealThumb }" alt="Receta ${strMeal}" >
             <h3 class="my-3">Instrucciones</h3>
             <p>${strInstructions}</p>
-
+            <h3 class="my-3">Ingredientes y Cantidades</h3>
         `;
+
+        const listGroup = document.createElement('UL');
+        listGroup.classList.add('list-group');
+
+        //mostrar ingredientes y cantidades
+        //con un for iteramos sobre los 20 ingredientes que trae la API
+        for( let i = 1; i <= 20; i++ ){
+            //si receta[`strIngredient${i}`] viene con un valor entonces se muestra 
+            if (receta[`strIngredient${i}`]) {
+                //variables ingredientes
+                const ingrediente = receta[`strIngredient${i}`];
+                //cantidades
+                const cantidad = receta[`strMeasure${i}`];
+
+                //crear html
+                const ingredienteLi = document.createElement('LI');
+                ingredienteLi.classList.add('list-group-item');
+                ingredienteLi.textContent = `${ingrediente} - ${cantidad}`;
+
+                //se agrega ingredienteLi a listGroup
+                listGroup.appendChild( ingredienteLi );
+            }
+        }
+
+        //agregar la lista de ingredientes y cantidades a modalBody
+        modalBody.appendChild( listGroup );
 
 
         //muestra el modal
