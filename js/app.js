@@ -5,11 +5,19 @@ function iniciarApp() {
     //añadir un listener a selectCategorias
     selectCategorias.addEventListener('change', seleccionarCategoria);
 
+    //variable donde se renderizaran los resultados
+    const resultado = document.querySelector('#resultado');
+    
+    //creando una instancia del modal
+    //como primer parametro va el ID del modal en este caso es #modal
+    //como segundo modal va un arreglo vacio que son las propiedades que se le pueden dar
+    const modal = new bootstrap.Modal('#modal', {});
+
     //llamar funcion
-    cargarCategorias();
+    obtenerCategorias();
 
     //funcion cargar categorias
-    function cargarCategorias() {
+    function obtenerCategorias() {
         //url
         const url = "https://www.themealdb.com/api/json/v1/1/categories.php";
 
@@ -137,7 +145,28 @@ function iniciarApp() {
 
     //funcion para mostrar la receta en el modal
     function mostrarRecetaModal( receta ) {
+        console.log( receta );
+        //destructuring
+        const { idMeal, strInstructions, strMeal, strMealThumb } = receta;
         
+        //añadir contenido al modal
+        //seleccionando algunos selectores del HTML
+        const modalTitle = document.querySelector('.modal .modal-title');
+        const modalBody = document.querySelector('.modal .modal-body');
+
+        //Titulo del modal
+        modalTitle.textContent = strMeal;
+        //cuerpo del modal
+        modalBody.innerHTML = `
+            <img class="img-fluid" src="${ strMealThumb }" alt="Receta ${strMeal}" >
+            <h3 class="my-3">Instrucciones</h3>
+            <p>${strInstructions}</p>
+
+        `;
+
+
+        //muestra el modal
+        modal.show();
     }
 
     //funcion para limpiar el HTML anterior
