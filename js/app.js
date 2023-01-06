@@ -191,6 +191,29 @@ function iniciarApp() {
         modalBody.appendChild( listGroup );
 
 
+        //variable
+        const modalFooter = document.querySelector('.modal-footer');
+        //limpiar el modal footer para que no se agreguen cada qeu se abra un modal mas botones
+        limpiarHTML(modalFooter);
+
+        //botones de cerrar y favorito
+        const btnFavorito = document.createElement('BUTTON');
+        btnFavorito.classList.add('btn', 'btn-danger', 'col');
+        btnFavorito.textContent = 'Guardar Favorito';
+
+        const btnCerrarModal = document.createElement('BUTTON');
+        btnCerrarModal.classList.add('btn', 'btn-secondary', 'col');
+        btnCerrarModal.textContent = 'Cerrar';
+        //cerrar modal presionando el boton
+        btnCerrarModal.onclick = function() {
+            //cerrar modal
+            modal.hide();
+        }
+
+        //renderizar
+        modalFooter.appendChild(btnFavorito);
+        modalFooter.appendChild(btnCerrarModal);
+
         //muestra el modal
         modal.show();
     }
