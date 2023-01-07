@@ -145,7 +145,6 @@ function iniciarApp() {
 
     //funcion para mostrar la receta en el modal
     function mostrarRecetaModal( receta ) {
-        console.log( receta );
         //destructuring
         const { idMeal, strInstructions, strMeal, strMealThumb } = receta;
         
@@ -201,6 +200,17 @@ function iniciarApp() {
         btnFavorito.classList.add('btn', 'btn-danger', 'col');
         btnFavorito.textContent = 'Guardar Favorito';
 
+        //agregar a favorito
+        btnFavorito.onclick = function () {
+            //se pasa como argumento un objeto con informacion de la receta seleccionada
+            agregarFavorito({
+                id: idMeal,
+                titulo: strMeal,
+                img: strMealThumb
+            });
+        }
+
+
         const btnCerrarModal = document.createElement('BUTTON');
         btnCerrarModal.classList.add('btn', 'btn-secondary', 'col');
         btnCerrarModal.textContent = 'Cerrar';
@@ -217,6 +227,16 @@ function iniciarApp() {
         //muestra el modal
         modal.show();
     }
+    //funcion para agregar Favorito
+    //se pasa como parametro el objeto
+    function agregarFavorito( receta ) {
+        //local storage
+        //obtenemos las recetas almacenadas
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+        //convertimos el arreglo con stringify
+        localStorage.setItem('favoritos', JSON.stringify([...favoritos, receta]));
+    }
+
 
     //funcion para limpiar el HTML anterior
     //se pasa como paramtro el selector de donde queremos que limpie
