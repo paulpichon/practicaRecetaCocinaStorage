@@ -232,6 +232,7 @@ function iniciarApp() {
     function agregarFavorito( receta ) {
         //local storage
         //obtenemos las recetas almacenadas
+        //Nullish coalescing operator ---> ??
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
         //convertimos el arreglo con stringify
         localStorage.setItem('favoritos', JSON.stringify([...favoritos, receta]));
