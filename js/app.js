@@ -202,6 +202,13 @@ function iniciarApp() {
 
         //agregar a favorito
         btnFavorito.onclick = function () {
+            //comprobar si existe una receta repetida
+            //si existe la receta ya no se agrega la receta
+            //pero si no existe se salta el if y agrega la receta
+            if (existeStorage( idMeal )) {
+                return;
+            }
+
             //se pasa como argumento un objeto con informacion de la receta seleccionada
             agregarFavorito({
                 id: idMeal,
@@ -236,6 +243,13 @@ function iniciarApp() {
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
         //convertimos el arreglo con stringify
         localStorage.setItem('favoritos', JSON.stringify([...favoritos, receta]));
+    }
+    //funcion para verificar que no haya una receta repetida en el storage
+    function existeStorage(id) {
+        //obtenemos las recetas almacenadas en storage
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+        //retornamos mediante un some()
+        return favoritos.some( favorito => favorito.id === id );
     }
 
 
