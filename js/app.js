@@ -1,3 +1,4 @@
+//actual
 function iniciarApp() {
 
     //variable que representa select
