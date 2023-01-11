@@ -199,7 +199,10 @@ function iniciarApp() {
         //botones de cerrar y favorito
         const btnFavorito = document.createElement('BUTTON');
         btnFavorito.classList.add('btn', 'btn-danger', 'col');
-        btnFavorito.textContent = 'Guardar Favorito';
+        //el text content sera condicional dependiendo de si ya esta o no en favoritos
+        //si existe en storage aparece el boton eliminar favorito sino 'Guardar en favoritos'
+        //se usa la funcion existeStorage(idMeal) para verificar si existe o no
+        btnFavorito.textContent = existeStorage(idMeal) ? 'Eliminar Favorito' : 'Guardar Favorito';
 
         //agregar a favorito
         btnFavorito.onclick = function () {
@@ -207,6 +210,10 @@ function iniciarApp() {
             //si existe la receta ya no se agrega la receta
             //pero si no existe se salta el if y agrega la receta
             if (existeStorage( idMeal )) {
+                //si ya existe la receta en favoritos entonces la borramos
+                eliminarFavorito( idMeal );
+                //si se elimina la receta de favoritos cambiamos el texto dle boton
+                btnFavorito.textContent = 'Guardar Favorito';
                 return;
             }
 
@@ -216,6 +223,8 @@ function iniciarApp() {
                 titulo: strMeal,
                 img: strMealThumb
             });
+            //si se agrega una receta al storage cambiamos el texto del boton
+            btnFavorito.textContent = 'Eliminar Favorito';
         }
 
 
@@ -252,7 +261,17 @@ function iniciarApp() {
         //retornamos mediante un some()
         return favoritos.some( favorito => favorito.id === id );
     }
+    //eliminar una receta de storage
+    //mediante el ID de la receta
+    function eliminarFavorito( id ){
+        //obtenemos las recetas almacenadas en storage
+        const favoritos = JSON.parse( localStorage.getItem('favoritos') ) ?? [];
 
+        //quitamos/eliminamos el favorito que queremos quitar
+        const nuevosFavoritos = favoritos.filter( favorito => favorito.id !== id );
+        //los almacenamos en storage con JSON.stringify
+        localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos) );
+    }
 
     //funcion para limpiar el HTML anterior
     //se pasa como paramtro el selector de donde queremos que limpie
