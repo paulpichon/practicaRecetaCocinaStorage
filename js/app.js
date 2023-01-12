@@ -214,6 +214,8 @@ function iniciarApp() {
                 eliminarFavorito( idMeal );
                 //si se elimina la receta de favoritos cambiamos el texto dle boton
                 btnFavorito.textContent = 'Guardar Favorito';
+                //mostrar toast de eliminado
+                mostrarToast('Eliminado Correctamente');
                 return;
             }
 
@@ -225,6 +227,8 @@ function iniciarApp() {
             });
             //si se agrega una receta al storage cambiamos el texto del boton
             btnFavorito.textContent = 'Eliminar Favorito';
+            //mostrar toast de agregado correctamente
+            mostrarToast('Agregado Correctamente');
         }
 
 
@@ -254,13 +258,6 @@ function iniciarApp() {
         //convertimos el arreglo con stringify
         localStorage.setItem('favoritos', JSON.stringify([...favoritos, receta]));
     }
-    //funcion para verificar que no haya una receta repetida en el storage
-    function existeStorage(id) {
-        //obtenemos las recetas almacenadas en storage
-        const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
-        //retornamos mediante un some()
-        return favoritos.some( favorito => favorito.id === id );
-    }
     //eliminar una receta de storage
     //mediante el ID de la receta
     function eliminarFavorito( id ){
@@ -271,6 +268,27 @@ function iniciarApp() {
         const nuevosFavoritos = favoritos.filter( favorito => favorito.id !== id );
         //los almacenamos en storage con JSON.stringify
         localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos) );
+    }
+    //funcion para verificar que no haya una receta repetida en el storage
+    function existeStorage(id) {
+        //obtenemos las recetas almacenadas en storage
+        const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+        //retornamos mediante un some()
+        return favoritos.some( favorito => favorito.id === id );
+    }
+    //funcion para mostrar un TOAST
+    function mostrarToast( mensaje ) {
+        //seleccionamos el toast
+        const toastDiv = document.querySelector('#toast');
+        //body del toast
+        const toastBody = document.querySelector('.toast-body');
+        //instanciar TOAST
+        const toast = new bootstrap.Toast(toastDiv);
+        //mensaje en el toast
+        toastBody.textContent = mensaje;
+        //mostramos con toast.show()
+        toast.show();
+
     }
 
     //funcion para limpiar el HTML anterior
