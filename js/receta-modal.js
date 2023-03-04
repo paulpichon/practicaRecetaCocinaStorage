@@ -1,6 +1,8 @@
 import { limpiarHTML } from "./limpiar-html.js";
 //agregar a storage
-import { agregarLStorage } from "./local-storage.js";
+import { agregarLStorage, verificarStorage } from "./local-storage.js";
+//exportar funcion para mostrar toast
+import { mostrarToast } from "./mostrar-toast.js";
 
 //fucnion para mostrar la receta en el MODAL
 const obtenerRecetas = async( id ) => {
@@ -82,15 +84,27 @@ const mostrarReceta = ( receta ) => {
     btnFavorito.textContent = 'Agregar Favorito';
     //agregar a favoritos
     btnFavorito.onclick = () => {
-        //crear objeto con informacion para gurdar en el storage
+        //objeto storage
         const objLS = {
             id: idMeal,
             titulo: strMeal, 
             img: strMealThumb
-
         }
-        //agregar a storage
+        
+        //verificar si existe la receta en el storage
+        if ( verificarStorage( objLS.id ) ) {
+
+            //mostrar mensaje
+
+            return;
+        }
+
+        //agregar a storage junto con el objeto
         agregarLStorage( objLS );
+        
+        //mostrar mensaje de agregado a favoritos
+        mostrarToast('Receta agregada a Favoritos');
+        
 
     }
 
