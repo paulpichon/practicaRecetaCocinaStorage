@@ -1,6 +1,6 @@
 import { limpiarHTML } from "./limpiar-html.js";
 //agregar a storage
-import { agregarLStorage, verificarStorage } from "./local-storage.js";
+import { agregarLStorage, eliminarReceta, verificarStorage } from "./local-storage.js";
 //exportar funcion para mostrar toast
 import { mostrarToast } from "./mostrar-toast.js";
 
@@ -27,7 +27,7 @@ const mostrarReceta = ( receta ) => {
     //html
     //titulo del modal
     const modalTitle = document.querySelector('h1.modal-title');
-    modalTitle.textContent = strMeal;
+    modalTitle.textContent = strMeal ;
    
     //ingredientes
     const modalBody = document.querySelector('.modal-body');
@@ -81,7 +81,7 @@ const mostrarReceta = ( receta ) => {
     //estilos
     btnFavorito.classList.add('btn', 'btn-danger', 'col');
     //textcontent
-    btnFavorito.textContent = 'Agregar Favorito';
+    btnFavorito.textContent = verificarStorage( idMeal ) ?  'Eliminar de Favoritos' : 'Agregar a Favoritos';
     //agregar a favoritos
     btnFavorito.onclick = () => {
         //objeto storage
@@ -94,14 +94,20 @@ const mostrarReceta = ( receta ) => {
         //verificar si existe la receta en el storage
         if ( verificarStorage( objLS.id ) ) {
 
-            //mostrar mensaje
+            //eliminar storage
+            eliminarReceta(objLS.id);
+            //cambiar nombre del boton
+            btnFavorito.textContent = 'Agregar a Favoritos';
+            //mostrar mensaje de agregado a favoritos
+            mostrarToast('Eliminado de Favoritos');
 
             return;
         }
 
         //agregar a storage junto con el objeto
         agregarLStorage( objLS );
-        
+        //cambiar nombre del boton
+        btnFavorito.textContent = 'Eliminar de Favoritos';
         //mostrar mensaje de agregado a favoritos
         mostrarToast('Receta agregada a Favoritos');
         

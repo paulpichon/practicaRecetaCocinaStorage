@@ -12,19 +12,21 @@ const obtenerCategorias = async() => {
 const mostrarCategoriasSelect = ( categorias ) => {
     //select
     const selectCategorias = document.querySelector('#categorias');
-
-    categorias.forEach( categoria => {
-        //destructuring
-        const { strCategory } = categoria;
-        //html
-        const option = document.createElement('OPTION');
-        option.value = strCategory;
-        option.textContent = strCategory;
-
-        //renderizar
-        selectCategorias.appendChild( option );
-
-    });
+    // si existe selectCategorias
+    if (selectCategorias) {
+        categorias.forEach( categoria => {
+            //destructuring
+            const { strCategory } = categoria;
+            //html
+            const option = document.createElement('OPTION');
+            option.value = strCategory;
+            option.textContent = strCategory;
+    
+            //renderizar
+            selectCategorias.appendChild( option );
+    
+        });   
+    }
 
 }
 //exports

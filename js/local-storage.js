@@ -2,7 +2,7 @@
 //funcion para verificar si existe en el storage
 const verificarStorage = ( id ) => {
     //traer el storage
-    const existeStorage = JSON.parse( localStorage.getItem('recetas') ) || [];
+    const existeStorage = JSON.parse( localStorage.getItem('recetas') ) ?? [];
     //buscar coincidencias por ID en caso de que haya retornara un TRUE
     return existeStorage.some( receta => receta.id === id );//true or false
 }
@@ -20,10 +20,23 @@ const agregarLStorage = ( objLS ) => {
 
 }
 
+//funcion para eliminar receta del storage
+const eliminarReceta = ( id ) => {
+    //obtener las recetas del storage
+    const favoritos = JSON.parse( localStorage.getItem('recetas') ) ?? [];
+    //eliminar receta
+    const nuevosfavoritos= favoritos.filter( receta => receta.id !== id );
+
+    //guARDAR EN STORAGE
+    localStorage.setItem('recetas', JSON.stringify( nuevosfavoritos ) );
+
+}
+
 
 
 //export
 export {
     verificarStorage,
-    agregarLStorage
+    agregarLStorage,
+    eliminarReceta
 }

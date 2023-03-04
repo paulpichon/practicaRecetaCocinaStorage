@@ -9,7 +9,9 @@ const filtrarPorCategoria = () => {
     //select categorias
     const selectCategorias = document.querySelector('#categorias');
     //listener
-    selectCategorias.addEventListener('change', buscarPorCategoria);
+    if (selectCategorias) {
+        selectCategorias.addEventListener('change', buscarPorCategoria);
+    }
 
 }
 
@@ -57,9 +59,9 @@ const mostrarRecetas = ( recetas = [] ) => {
         //estilos
         recetaImagen.classList.add('card-img-top');
         //imagen alt
-        recetaImagen.alt = `La imagen de la receta es ${ strMeal }`;
+        recetaImagen.alt = `La imagen de la receta es ${ strMeal ?? receta.titulo  }`;
         //imagen src
-        recetaImagen.src = strMealThumb;
+        recetaImagen.src = strMealThumb ?? receta.img;
 
         
         //body del card
@@ -73,7 +75,7 @@ const mostrarRecetas = ( recetas = [] ) => {
         recetaHeading.classList.add('card-title', 'mb-3');
         //textcontent
         //si viene desde la API muestra strMeal o desde si viene de localstorage muestra receta.title
-        recetaHeading.textContent = strMeal;
+        recetaHeading.textContent = strMeal ?? receta.titulo;
 
 
         //button de enlace
@@ -85,7 +87,7 @@ const mostrarRecetas = ( recetas = [] ) => {
         //llama un o unas funcion dentro de un archivo de javasctipt en este caso = data-bs-toggle="modal"
         //recetaButton.dataset.bsToggle = 'modal';
         recetaButton.onclick = function() {
-            obtenerRecetas( idMeal );
+            obtenerRecetas( idMeal ?? receta.id );
         }
 
         //inyectar en el html
@@ -113,5 +115,6 @@ const mostrarRecetas = ( recetas = [] ) => {
 
 
 export {
-    filtrarPorCategoria
+    filtrarPorCategoria,
+    mostrarRecetas
 }
